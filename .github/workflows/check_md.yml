@@ -1,0 +1,16 @@
+name: Check Markdown links
+on: pull_request
+jobs:
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-verbose-mode: 'yes'
+          config-file: '.config/mlc_config.json'
+          # CHANGELOG.md is excluded.
+          # GitHub returns 429 error code due to the amount of requests.
+          # This will be fixed after https://github.com/tcort/markdown-link-check/issues/114 be released
+          folder-path: 'koin-projects, .github'
+          file-path: './README.md, ./CODE_OF_CONDUCT.md'
