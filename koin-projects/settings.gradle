@@ -30,6 +30,7 @@ include 'examples:android-samples'
 include 'examples:androidx-samples'
 include 'examples:androidx-compose'
 include 'examples:androidx-compose-jetnews'
+include 'examples:androidx-navigation'
 
 // Ktor
 include 'koin-logger-slf4j'

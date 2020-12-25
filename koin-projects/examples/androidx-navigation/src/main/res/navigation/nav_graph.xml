@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.androidx_navigation.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_featureAFragment1"
+            app:destination="@id/featureAFragment1" />
+        <action
+            android:id="@+id/action_mainFragment_to_featureBFragment1"
+            app:destination="@id/featureBFragment1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/featureAFragment1"
+        android:name="com.example.androidx_navigation.featurea.FeatureAFragment1"
+        android:label="fragment_feature_a_2"
+        tools:layout="@layout/fragment_feature_a_1">
+        <action
+            android:id="@+id/action_featureAFragment1_to_featureAFragment2"
+            app:destination="@id/featureAFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/featureAFragment2"
+        android:name="com.example.androidx_navigation.featurea.FeatureAFragment2"
+        android:label="FeatureAFragment2"
+        tools:layout="@layout/fragment_feature_a_2" />
+
+    <fragment
+        android:id="@+id/featureBFragment1"
+        android:name="com.example.androidx_navigation.featureb.FeatureBFragment1"
+        android:label="FeatureBFragment1"
+        tools:layout="@layout/fragment_feature_b_1">
+        <action
+            android:id="@+id/action_featureBFragment1_to_featureBFragment2"
+            app:destination="@id/featureBFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/featureBFragment2"
+        android:name="com.example.androidx_navigation.featureb.FeatureBFragment2"
+        android:label="FeatureBFragment2"
+        tools:layout="@layout/fragment_feature_b_2" />
+
+</navigation>

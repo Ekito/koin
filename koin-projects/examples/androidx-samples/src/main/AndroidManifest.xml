@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.koin.sample.android">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name="org.koin.sample.androidx.MainApplication"
         android:allowBackup="true"
