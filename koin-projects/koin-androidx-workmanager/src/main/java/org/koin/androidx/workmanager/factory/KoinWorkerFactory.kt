@@ -21,7 +21,6 @@ import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 
@@ -30,6 +29,7 @@ import org.koin.core.qualifier.named
  *
  * @author Fabio de Matos
  * @author Arnaud Giuliani
+ * @author Konstantin Mutasov
  **/
 @OptIn(KoinApiExtension::class)
 class KoinWorkerFactory : WorkerFactory(), KoinComponent {
@@ -38,8 +38,8 @@ class KoinWorkerFactory : WorkerFactory(), KoinComponent {
         appContext: Context,
         workerClassName: String,
         workerParameters: WorkerParameters
-    ): ListenableWorker {
-        return get(qualifier = named(workerClassName)) { parametersOf(workerParameters) }
+    ): ListenableWorker? {
+        return getKoin().getOrNull(qualifier = named(workerClassName)) { parametersOf(workerParameters) }
     }
 }
 
