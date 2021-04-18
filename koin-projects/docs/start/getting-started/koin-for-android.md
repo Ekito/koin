@@ -143,3 +143,107 @@ class MyActivity : AppCompatActivity(){
 }
 ```
 
+## Android Work Manager
+> (koin-android-workmanager project)
+>
+### Configure Koin as Work Manager Factory 
+
+Disable the default work manager factory in the manifest:
+```xml
+<manifest>
+
+   <application>
+      . . . 
+      <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            tools:node="remove" />
+   </application>
+</manifest>    
+```
+
+Activate Koin's factory in Application:
+
+```kotlin
+
+  startKoin {
+            ...
+            androidContext(applicationContext)
+            workManagerFactory()
+        }
+``` 
+
+Note that `workManagerFactory()` must come after `androidContext(applicationContext)`, or the application will fail to initialize in the proper order and will crash.
+
+### Declare worker listeners
+
+
+Koin brings special features to manage ViewModel:
+
+* `worker` special DSL keyword to declare an instance of ListenableWorker
+
+Let's declare a ListenableWorker in a module:
+
+```kotlin
+val myModule : Module = module {
+    
+    // ViewModel instance of MyViewModel
+    // get() will resolve Repository instance
+    worker { MyWorker(get()) }
+
+    // Single instance of Repository
+    single<Repository> { MyRepository() }
+}
+```
+ 
+
+### Start the worker as usual
+
+```kotlin
+
+            OneTimeWorkRequestBuilder<MyWorker>()
+                .build()
+                .let{
+                    workManager.enqueue(it )
+                }
+ 
+```
+### Troubleshooting
+
+Problem: Crash with the following message
+> E/WM-WorkerFactory: Could not instantiate xxx.xxx.xxxWorker
+>  Caused by: java.lang.IllegalStateException: WorkManager is already initialized.  Did you try to initialize it manually without disabling WorkManagerInitializer? See WorkManager#initialize(Context, Configuration) or the class level Javadoc for more information.
+>
+
+Solution: add the declaration in manifest to disable default work manager factory
+
+---------------
+
+Problem: Crash with the following message 
+> Caused by: java.lang.IllegalStateException: WorkManager is not initialized properly.  You have explicitly disabled WorkManagerInitializer in your manifest, have not manually called WorkManager#initialize at this point, and your Application does not implement Configuration.Provider.
+
+Solution: Application is not installing koin's work manager factory ( `workManagerFactory()` statement is missing )
+
+---------
+
+Problem: Crash with the following message
+>  java.lang.RuntimeException: Unable to create application xxx.xxx.xxxApplication: org.koin.core.error.NoBeanDefFoundException: No definition found for class:'android.content.Context'. Check your definitions!
+
+Solution: while starting koin add `androidContext(applicationContext)` before `workManagerFactory()`
+
+----------
+
+Problem: Crash with the following message
+> E/WM-DelegatingWkrFctry: Unable to instantiate a ListenableWorker (xxx.xxx.xxxWorker)
+     org.koin.core.error.NoBeanDefFoundException: No definition found for class:'androidx.work.ListenableWorker' & qualifier:'xxx.xxx.xxxWorker'. Check your definitions!
+>
+
+Solution: add a definition for `xxxWorker` in one of the loaded modules, such as 
+
+```kotlin
+val myModule : Module = module {
+    worker { xxxWorker(get()) }
+}
+```
+
+
