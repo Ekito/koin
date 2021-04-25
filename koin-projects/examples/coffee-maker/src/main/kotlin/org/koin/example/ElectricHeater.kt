@@ -1,5 +1,8 @@
 package org.koin.example
 
+import org.koin.ksp.KoinInject
+
+@KoinInject
 class ElectricHeater : Heater {
 
     private var heating: Boolean = false

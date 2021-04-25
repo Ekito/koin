@@ -1,3 +1,10 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+    }
+}
+
 // Core
 include 'koin-core'
 include 'koin-test-core'
@@ -13,11 +20,15 @@ include 'koin-core-ext'
 // Gradle plugin
 include 'koin-gradle-plugin'
 
+// Gradle KSP
+include 'koin-ksp'
+include 'koin-ksp-apply'
+
 // Android
 include 'koin-android'
 include 'examples:android-perfs'
-include 'koin-android-scope' ,'koin-android-viewmodel'
-include 'koin-androidx-scope','koin-androidx-fragment', 'koin-androidx-viewmodel'
+include 'koin-android-scope', 'koin-android-viewmodel'
+include 'koin-androidx-scope', 'koin-androidx-fragment', 'koin-androidx-viewmodel'
 include 'koin-androidx-workmanager'
 include 'koin-androidx-compose'
 
@@ -39,3 +50,11 @@ include 'examples:multimodule-ktor:app'
 include 'examples:multimodule-ktor:common'
 include 'examples:multimodule-ktor:module-a'
 include 'examples:multimodule-ktor:module-b'
+
+//pluginManagement {
+//    repositories {
+//        gradlePluginPortal()
+//        google()
+//    }
+//}
+

@@ -8,8 +8,10 @@ buildscript {
 //        classpath "org.koin:koin-gradle-plugin:$koin_version"
     }
 }
-
-apply plugin: 'kotlin'
+plugins {
+    id 'kotlin'
+    id 'com.google.devtools.ksp' version "1.4.30-1.0.0-alpha02"
+}
 //apply plugin: 'koin'
 
 dependencies {
@@ -18,4 +20,7 @@ dependencies {
 
     testImplementation "io.mockk:mockk:$mockk_version"
 //    testImplementation "org.mockito:mockito-inline:$mockito_version"
+
+    implementation(project(":koin-ksp"))
+    ksp(project(":koin-ksp"))
 }
