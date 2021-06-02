@@ -331,7 +331,7 @@ data class Scope(
      *
      * @return instance of type S
      */
-    inline fun <reified S, reified P> bind(noinline parameters: ParametersDefinition? = null): S {
+    inline fun <reified S : Any, reified P : S> bind(noinline parameters: ParametersDefinition? = null): S {
         val secondaryType = S::class
         val primaryType = P::class
         return bind(primaryType, secondaryType, parameters)
@@ -343,9 +343,9 @@ data class Scope(
      *
      * @return instance of type S
      */
-    fun <S> bind(
-        primaryType: KClass<*>,
-        secondaryType: KClass<*>,
+    fun <P : S, S : Any> bind(
+        primaryType: KClass<P>,
+        secondaryType: KClass<S>,
         parameters: ParametersDefinition?
     ): S {
         return instanceRegistry.bind(primaryType, secondaryType, parameters)

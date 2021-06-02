@@ -177,7 +177,7 @@ class Koin {
      *
      * @return instance of type S
      */
-    inline fun <reified S, reified P> bind(noinline parameters: ParametersDefinition? = null): S =
+    inline fun <reified S : Any, reified P : S> bind(noinline parameters: ParametersDefinition? = null): S =
             scopeRegistry.rootScope.bind<S, P>(parameters)
 
     /**
@@ -186,9 +186,9 @@ class Koin {
      *
      * @return instance of type S
      */
-    fun <S> bind(
-            primaryType: KClass<*>,
-            secondaryType: KClass<*>,
+    fun <S : Any, P : S> bind(
+            primaryType: KClass<P>,
+            secondaryType: KClass<S>,
             parameters: ParametersDefinition? = null
     ): S = scopeRegistry.rootScope.bind(primaryType, secondaryType, parameters)
 

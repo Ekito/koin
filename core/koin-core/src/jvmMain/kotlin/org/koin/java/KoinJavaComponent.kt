@@ -81,7 +81,7 @@ object KoinJavaComponent {
 
     @JvmStatic
     @JvmOverloads
-    fun <P : Any, S : Any> bind(
+    fun <P : S, S : Any> bind(
         primary: Class<P>,
         secondary: Class<S>,
         parameters: ParametersDefinition? = null

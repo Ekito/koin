@@ -30,16 +30,19 @@ import kotlin.reflect.KClass
  * Add a compatible type to match for definition
  * @param clazz
  */
-infix fun <T> BeanDefinition<T>.bind(clazz: KClass<*>): BeanDefinition<T> {
+infix fun <S : Any, P : S> BeanDefinition<P>.bind(clazz: KClass<S>): BeanDefinition<P> {
     secondaryTypes = secondaryTypes + clazz
     return this
 }
 
 /**
  * Add a compatible type to match for definition
+ *
+ * Type-safety may be checked by "checkModules" from "koin-test" module.
  */
 inline fun <reified T> BeanDefinition<*>.bind(): BeanDefinition<*> {
-    return bind(T::class)
+    secondaryTypes = secondaryTypes + T::class
+    return this
 }
 
 /**
